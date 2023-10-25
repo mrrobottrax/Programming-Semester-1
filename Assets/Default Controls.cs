@@ -53,6 +53,15 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire1"",
+                    ""type"": ""Button"",
+                    ""id"": ""2c07aad1-b69c-4d3f-801e-b1befd1eee6d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a9a7a29e-9a78-4fbd-a6ba-61faff68c32c"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
         m_DefaultMap_Move = m_DefaultMap.FindAction("Move", throwIfNotFound: true);
         m_DefaultMap_Jump = m_DefaultMap.FindAction("Jump", throwIfNotFound: true);
         m_DefaultMap_Look = m_DefaultMap.FindAction("Look", throwIfNotFound: true);
+        m_DefaultMap_Fire1 = m_DefaultMap.FindAction("Fire1", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +228,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_DefaultMap_Move;
     private readonly InputAction m_DefaultMap_Jump;
     private readonly InputAction m_DefaultMap_Look;
+    private readonly InputAction m_DefaultMap_Fire1;
     public struct DefaultMapActions
     {
         private @DefaultControls m_Wrapper;
@@ -214,6 +236,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_DefaultMap_Move;
         public InputAction @Jump => m_Wrapper.m_DefaultMap_Jump;
         public InputAction @Look => m_Wrapper.m_DefaultMap_Look;
+        public InputAction @Fire1 => m_Wrapper.m_DefaultMap_Fire1;
         public InputActionMap Get() { return m_Wrapper.m_DefaultMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +255,9 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @Fire1.started += instance.OnFire1;
+            @Fire1.performed += instance.OnFire1;
+            @Fire1.canceled += instance.OnFire1;
         }
 
         private void UnregisterCallbacks(IDefaultMapActions instance)
@@ -245,6 +271,9 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @Fire1.started -= instance.OnFire1;
+            @Fire1.performed -= instance.OnFire1;
+            @Fire1.canceled -= instance.OnFire1;
         }
 
         public void RemoveCallbacks(IDefaultMapActions instance)
@@ -267,5 +296,6 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnFire1(InputAction.CallbackContext context);
     }
 }

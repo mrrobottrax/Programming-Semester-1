@@ -45,4 +45,39 @@ public class PlayerAim : MonoBehaviour
 			cameraPivot.localEulerAngles = new Vector3(Pitch, euler.y, euler.z);
 		}
 	}
+
+	public Vector2 Rotate2D(Vector2 dir)
+	{
+		Vector2 rot = dir;
+
+		rot.x = dir.x * Mathf.Cos(Mathf.Deg2Rad * Yaw) + dir.y * Mathf.Sin(Mathf.Deg2Rad * Yaw);
+		rot.y = dir.x * Mathf.Sin(Mathf.Deg2Rad * -Yaw) + dir.y * Mathf.Cos(Mathf.Deg2Rad * -Yaw);
+
+		return rot;
+	}
+
+	public Vector3 RotateYaw(Vector3 dir)
+	{
+		Vector3 rot = dir;
+
+		rot.x = dir.x * Mathf.Cos(Mathf.Deg2Rad * Yaw) + dir.z * Mathf.Sin(Mathf.Deg2Rad * Yaw);
+		rot.z = dir.x * Mathf.Sin(Mathf.Deg2Rad * -Yaw) + dir.z * Mathf.Cos(Mathf.Deg2Rad * -Yaw);
+
+		return rot;
+	}
+
+	public Vector3 RotatePitch(Vector3 dir)
+	{
+		Vector3 rot = dir;
+
+		rot.y = dir.z * Mathf.Sin(Mathf.Deg2Rad * -Pitch) + dir.y * Mathf.Cos(Mathf.Deg2Rad * -Pitch);
+		rot.z = dir.z * Mathf.Cos(Mathf.Deg2Rad * Pitch) + dir.y * Mathf.Sin(Mathf.Deg2Rad * Pitch);
+
+		return rot;
+	}
+
+	public Vector3 Rotate3D(Vector3 dir)
+	{
+		return RotateYaw(RotatePitch(dir));
+	}
 }

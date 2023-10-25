@@ -55,7 +55,7 @@ public class PlayerMove : MonoBehaviour
 
 	void Move()
 	{
-		Vector2 moveDir = RotateMoveDir(InputManager.Controls.DefaultMap.Move.ReadValue<Vector2>());
+		Vector2 moveDir = playerAim.Rotate2D(InputManager.Controls.DefaultMap.Move.ReadValue<Vector2>());
 		rb.AddForce(acceleration * Time.fixedDeltaTime * new Vector3(moveDir.x, 0, moveDir.y), ForceMode.VelocityChange);
 
 		float speed = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
@@ -68,16 +68,6 @@ public class PlayerMove : MonoBehaviour
 		{
 			rb.velocity *= moveSpeed / speed;
 		}
-	}
-
-	Vector2 RotateMoveDir(Vector2 dir)
-	{
-		Vector2 rot = dir;
-
-		rot.x = dir.x * Mathf.Cos(Mathf.Deg2Rad * playerAim.Yaw) + dir.y * Mathf.Sin(Mathf.Deg2Rad * playerAim.Yaw);
-		rot.y = dir.x * Mathf.Sin(Mathf.Deg2Rad * -playerAim.Yaw) + dir.y * Mathf.Cos(Mathf.Deg2Rad * -playerAim.Yaw);
-
-		return rot;
 	}
 
 	void Jump()
