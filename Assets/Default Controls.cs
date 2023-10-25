@@ -62,6 +62,15 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""54fe454b-f7e9-462e-8700-94d652441159"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
                     ""action"": ""Fire1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a419ea2c-4a8d-4ec6-91d8-1dfe046ae667"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +184,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
         m_DefaultMap_Jump = m_DefaultMap.FindAction("Jump", throwIfNotFound: true);
         m_DefaultMap_Look = m_DefaultMap.FindAction("Look", throwIfNotFound: true);
         m_DefaultMap_Fire1 = m_DefaultMap.FindAction("Fire1", throwIfNotFound: true);
+        m_DefaultMap_Reload = m_DefaultMap.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +250,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_DefaultMap_Jump;
     private readonly InputAction m_DefaultMap_Look;
     private readonly InputAction m_DefaultMap_Fire1;
+    private readonly InputAction m_DefaultMap_Reload;
     public struct DefaultMapActions
     {
         private @DefaultControls m_Wrapper;
@@ -237,6 +259,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_DefaultMap_Jump;
         public InputAction @Look => m_Wrapper.m_DefaultMap_Look;
         public InputAction @Fire1 => m_Wrapper.m_DefaultMap_Fire1;
+        public InputAction @Reload => m_Wrapper.m_DefaultMap_Reload;
         public InputActionMap Get() { return m_Wrapper.m_DefaultMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +281,9 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
             @Fire1.started += instance.OnFire1;
             @Fire1.performed += instance.OnFire1;
             @Fire1.canceled += instance.OnFire1;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IDefaultMapActions instance)
@@ -274,6 +300,9 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
             @Fire1.started -= instance.OnFire1;
             @Fire1.performed -= instance.OnFire1;
             @Fire1.canceled -= instance.OnFire1;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IDefaultMapActions instance)
@@ -297,5 +326,6 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire1(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

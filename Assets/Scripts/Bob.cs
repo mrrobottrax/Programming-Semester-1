@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Bob : MonoBehaviour
 {
 	[SerializeField]
 	float rotationSpeed = 40;
