@@ -1,78 +1,90 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerAim), typeof(CapsuleCollider))]
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField]
-    InputActionAsset actionAsset;
+	Rigidbody rb;
+	PlayerAim playerAim;
+	CapsuleCollider capsule;
 
-    InputActionMap actionMap;
+	const float jumpForce = 4;
+	const float moveSpeed = 5;
+	const float acceleration = 50;
 
-    InputAction moveAction;
-    InputAction jumpAction;
+	[SerializeField] LayerMask groundLayers = ~0;
+	bool isGrounded = false;
 
-    Rigidbody rb;
-
-    const float jumpForce = 4;
-    const float moveSpeed = 5;
-    const float acceleration = 50;
-
-    [SerializeField] LayerMask groundLayers = ~0;
-    float groundCheckDist;
-    bool isGrounded = false;
-
-    private void Awake()
-    {
-        actionAsset.Enable();
-        actionMap = actionAsset.FindActionMap("Default Map");
-        moveAction = actionMap.FindAction("Move");
-        jumpAction = actionMap.FindAction("Jump");
-
-        jumpAction.performed += ctx => Jump();
-
-        rb = gameObject.GetComponent<Rigidbody>();
-
-        groundCheckDist = (GetComponent<Collider>().bounds.size.y / 2.0f) + 0.01f;
-    }
-
-    void FixedUpdate()
+	private void Awake()
 	{
-        CheckGrounded();
+		InputManager.Awake();
 
-        if (isGrounded)
-        {
-            Move();
-        }
+		rb = GetComponent<Rigidbody>();
+		playerAim = GetComponent<PlayerAim>();
+		capsule = GetComponent<CapsuleCollider>();
 	}
 
-    void CheckGrounded()
-    {
-        isGrounded = Physics.Raycast(transform.position, -transform.up, groundCheckDist, groundLayers);
-    }
+	private void Start()
+	{
+		InputManager.Controls.DefaultMap.Jump.performed += ctx => Jump();
+	}
 
-    void Move()
-    {
-        Vector2 moveDir = moveAction.ReadValue<Vector2>();
-        rb.AddForce(acceleration * Time.fixedDeltaTime * new Vector3(moveDir.x, 0, moveDir.y), ForceMode.VelocityChange);
+	private void OnDestroy()
+	{
+		InputManager.Destroy();
+	}
 
-        float speed = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
-        if (speed == 0)
-        {
-            return;
-        }
+	void FixedUpdate()
+	{
+		CheckGrounded();
 
-        if (speed > moveSpeed)
-        {
-            rb.velocity *= moveSpeed / speed;
-        }
-    }
+		if (isGrounded)
+		{
+			Move();
+		}
+	}
 
-    void Jump()
-    {
-        if (isGrounded)
-        {
-            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.VelocityChange);
-        }
-    }
+	void CheckGrounded()
+	{
+		const float groundCheckEpsilon = 0.01f;
+
+		Vector3 bottom = transform.position + transform.rotation * capsule.center;
+		bottom -= transform.up * (capsule.height / 2.0f - capsule.radius + groundCheckEpsilon);
+
+		isGrounded = Physics.CheckSphere(bottom, capsule.radius, groundLayers, QueryTriggerInteraction.Ignore);
+	}
+
+	void Move()
+	{
+		Vector2 moveDir = RotateMoveDir(InputManager.Controls.DefaultMap.Move.ReadValue<Vector2>());
+		rb.AddForce(acceleration * Time.fixedDeltaTime * new Vector3(moveDir.x, 0, moveDir.y), ForceMode.VelocityChange);
+
+		float speed = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
+		if (speed == 0)
+		{
+			return;
+		}
+
+		if (speed > moveSpeed)
+		{
+			rb.velocity *= moveSpeed / speed;
+		}
+	}
+
+	Vector2 RotateMoveDir(Vector2 dir)
+	{
+		Vector2 rot = dir;
+
+		rot.x = dir.x * Mathf.Cos(Mathf.Deg2Rad * playerAim.Yaw) + dir.y * Mathf.Sin(Mathf.Deg2Rad * playerAim.Yaw);
+		rot.y = dir.x * Mathf.Sin(Mathf.Deg2Rad * -playerAim.Yaw) + dir.y * Mathf.Cos(Mathf.Deg2Rad * -playerAim.Yaw);
+
+		return rot;
+	}
+
+	void Jump()
+	{
+		if (isGrounded)
+		{
+			rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.VelocityChange);
+		}
+	}
 }
