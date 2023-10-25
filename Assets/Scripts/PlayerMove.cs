@@ -16,8 +16,6 @@ public class PlayerMove : MonoBehaviour
 
 	private void Awake()
 	{
-		InputManager.Awake();
-
 		rb = GetComponent<Rigidbody>();
 		playerAim = GetComponent<PlayerAim>();
 		capsule = GetComponent<CapsuleCollider>();
@@ -26,11 +24,6 @@ public class PlayerMove : MonoBehaviour
 	private void Start()
 	{
 		InputManager.Controls.DefaultMap.Jump.performed += ctx => Jump();
-	}
-
-	private void OnDestroy()
-	{
-		InputManager.Destroy();
 	}
 
 	void FixedUpdate()
