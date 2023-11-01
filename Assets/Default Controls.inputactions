@@ -3,12 +3,12 @@
     "maps": [
         {
             "name": "Default Map",
-            "id": "19ecf3bf-0382-4402-9766-6fec03313aa6",
+            "id": "d24f3235-bc10-4468-9f11-656b1414c860",
             "actions": [
                 {
                     "name": "Move",
                     "type": "Value",
-                    "id": "18811b07-9ebb-44b4-bb66-be9b4b791e80",
+                    "id": "5e1f9068-7ad5-4c57-a08b-3939ae1d3f30",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -17,7 +17,7 @@
                 {
                     "name": "Jump",
                     "type": "Button",
-                    "id": "4e248de7-224f-4d40-9361-4ceebafda99c",
+                    "id": "6f005b35-8fe2-4787-987d-8453d25ff4d8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -26,7 +26,7 @@
                 {
                     "name": "Look",
                     "type": "PassThrough",
-                    "id": "30d667a0-1ecf-4942-ab03-d7715e265f50",
+                    "id": "05c711bc-6781-4aa0-8153-e396804c56df",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -34,17 +34,44 @@
                 },
                 {
                     "name": "Fire1",
+                    "type": "PassThrough",
+                    "id": "c52f6ab8-f5d5-4ade-9b2c-9e5458cebfb2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Reload",
                     "type": "Button",
-                    "id": "2c07aad1-b69c-4d3f-801e-b1befd1eee6d",
+                    "id": "0c62af6a-d55e-4313-b74b-597c6cd21867",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Reload",
+                    "name": "Inventory0",
                     "type": "Button",
-                    "id": "54fe454b-f7e9-462e-8700-94d652441159",
+                    "id": "f2096f0c-99ab-451d-9c19-5e547c26cce9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Inventory1",
+                    "type": "Button",
+                    "id": "c17731e8-269b-408b-8fdd-be31663b973f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Inventory2",
+                    "type": "Button",
+                    "id": "54bbd772-3b4e-4937-80e8-173f309be345",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -54,7 +81,7 @@
             "bindings": [
                 {
                     "name": "2D Vector",
-                    "id": "12e65354-91d1-477c-9ab5-f1e7ae15d318",
+                    "id": "bedf484f-5278-455c-892f-0876fc62ebdd",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -65,7 +92,7 @@
                 },
                 {
                     "name": "up",
-                    "id": "667115f2-300e-4604-8867-1d0eb89cca54",
+                    "id": "51d096fe-a604-4870-b06a-bef53c189b71",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -76,7 +103,7 @@
                 },
                 {
                     "name": "down",
-                    "id": "dcd63088-4364-4acc-a2b2-3e2339bc29ee",
+                    "id": "d6f18167-fe4b-4f30-805b-e03faef7e6e2",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -87,7 +114,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "8f433392-4114-48c0-bbd2-7c45e4d1f524",
+                    "id": "8b029efc-3f0f-4359-8c81-304b4ce06663",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -98,7 +125,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "e9ca19ed-20d4-4663-8ab2-28cdc4a6eb7b",
+                    "id": "e14e15d1-50b3-4dc4-9503-08f5bc5f9083",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -109,7 +136,7 @@
                 },
                 {
                     "name": "",
-                    "id": "4f4a5262-6ff2-4654-9225-c3871282692d",
+                    "id": "a0d0baca-7964-4eea-95f9-e1a214d2578e",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
@@ -120,7 +147,7 @@
                 },
                 {
                     "name": "",
-                    "id": "8340ac9a-fd3f-41c9-964c-21b668dde115",
+                    "id": "ed3b1bf3-e03a-4156-a761-13a3bdb29294",
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
@@ -131,7 +158,7 @@
                 },
                 {
                     "name": "",
-                    "id": "a9a7a29e-9a78-4fbd-a6ba-61faff68c32c",
+                    "id": "4b816dc2-9220-4edc-82f0-be00ed80499a",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
@@ -142,12 +169,45 @@
                 },
                 {
                     "name": "",
-                    "id": "a419ea2c-4a8d-4ec6-91d8-1dfe046ae667",
+                    "id": "31ae25c0-7f3b-4c36-928d-8214d22719ce",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68418947-e0ee-443e-9595-f64b481abe98",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory0",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b669115-4cce-44ef-bfa6-436fbad1bc4d",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07bf2101-7912-4539-87a5-7d80b1de7dd5",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

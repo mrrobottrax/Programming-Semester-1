@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5523409018980954550}
   - component: {fileID: 5523409018980954551}
   - component: {fileID: 5523409018980954552}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 5523409019050545779}
   - component: {fileID: 5523409019050545778}
   - component: {fileID: 5523409019050545777}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AmmoPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}

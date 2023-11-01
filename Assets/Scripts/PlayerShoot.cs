@@ -1,95 +1,73 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using TMPro;
 
 [RequireComponent(typeof(PlayerAim))]
 public class PlayerShoot : MonoBehaviour
 {
-	[Header("Stats")]
-	[SerializeField] float bulletSpeed = 15;
-
-	[SerializeField] int clipSize = 5;
-	[SerializeField] int maxReserve = 60;
-
-	[SerializeField] int clip = 0;
-	[SerializeField] int reserve = 0;
-
 	[Header("References")]
-	[SerializeField] Transform bulletSpawn;
-	[SerializeField] GameObject bulletPrefab;
 	[SerializeField] TMP_Text ammoText;
+	[SerializeField] Gun[] inventory = new Gun[3];
 
-	PlayerAim playerAim;
+	Gun activeGun;
 
 	private void Awake()
 	{
-		playerAim = GetComponent<PlayerAim>();
+		PlayerAim playerAim = GetComponent<PlayerAim>();
+
+		for (int i = 0; i < inventory.Length; i++)
+		{
+			inventory[i].playerAim = playerAim;
+			inventory[i].ammoText = ammoText;
+		}
+
+		SetGunActive(0);
+	}
+
+	void SetGunActive(int index)
+	{
+		activeGun = inventory[index];
+		activeGun.OnSetActive();
 	}
 
 	private void Start()
 	{
-		InputManager.Controls.DefaultMap.Fire1.performed += ctx => Fire();
+		InputManager.Controls.DefaultMap.Fire1.performed += ctx =>
+		{
+			bool isPressed = ctx.ReadValue<float>() > 0;
+			if (isPressed)
+				StartFire();
+			else
+				StopFire();
+		};
 		InputManager.Controls.DefaultMap.Reload.performed += ctx => Reload();
 
-		UpdateAmmo();
+		InputManager.Controls.DefaultMap.Inventory0.performed += ctx => SetGunActive(0);
+		InputManager.Controls.DefaultMap.Inventory1.performed += ctx => SetGunActive(1);
+		InputManager.Controls.DefaultMap.Inventory2.performed += ctx => SetGunActive(2);
 	}
 
-	void Fire()
+	void StartFire()
 	{
-		if (clip <= 0)
-			return;
+		activeGun.StartAttack();
+	}
 
-		GameObject bullet = Instantiate(bulletPrefab);
-		bullet.transform.position = bulletSpawn.position;
-		bullet.GetComponent<Rigidbody>().velocity = playerAim.Rotate3D(new Vector3(0, 0, bulletSpeed));
-
-		--clip;
-		if (clip < 0)
-			clip = 0;
-
-		UpdateAmmo();
+	void StopFire()
+	{
+		activeGun.StopAttack();
 	}
 
 	void Reload()
 	{
-		if (reserve <= 0)
-			return;
-
-		int needed = clipSize - clip;
-
-		reserve -= needed;
-
-		clip = clipSize;
-
-		// don't add bullets we don't have
-		if (reserve < 0)
-		{
-			clip += reserve;
-			reserve = 0;
-		}
-
-		UpdateAmmo();
+		activeGun.Reload();
 	}
 
 	public void AddAmmo(int amount)
 	{
-		reserve += amount;
-		if (reserve > maxReserve)
-			reserve = maxReserve;
-
-		UpdateAmmo();
-	}
-
-	void UpdateAmmo()
-	{
-		ammoText.text = $"{clip} / {reserve}";
+		activeGun.AddAmmo(amount);
 	}
 
 	public bool IsFull()
 	{
-		return reserve >= maxReserve;
+		return activeGun.IsFull();
 	}
 }
