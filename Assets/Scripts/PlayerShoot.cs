@@ -1,20 +1,24 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(PlayerAim))]
 public class PlayerShoot : MonoBehaviour
 {
 	[Header("References")]
 	[SerializeField] TMP_Text ammoText;
-	[SerializeField] Gun[] inventory = new Gun[3];
+	[SerializeField] List<WeaponBase> inventory = new();
+	[SerializeField] List<GameObject> weaponModels = new();
+	[SerializeField] Transform gunPivot;
 
-	Gun activeGun;
+	int activeWeaponIndex = -1;
+	PlayerAim playerAim;
 
 	private void Awake()
 	{
-		PlayerAim playerAim = GetComponent<PlayerAim>();
+		playerAim = GetComponent<PlayerAim>();
 
-		for (int i = 0; i < inventory.Length; i++)
+		for (int i = 0; i < inventory.Count; i++)
 		{
 			inventory[i].playerAim = playerAim;
 			inventory[i].ammoText = ammoText;
@@ -25,8 +29,23 @@ public class PlayerShoot : MonoBehaviour
 
 	void SetGunActive(int index)
 	{
-		activeGun = inventory[index];
-		activeGun.OnSetActive();
+		if (index >= inventory.Count)
+		{
+			ammoText.enabled = false;
+			return;
+		}
+
+		if (activeWeaponIndex >= 0)
+			weaponModels[activeWeaponIndex].SetActive(false);
+		weaponModels[index].SetActive(true);
+
+		activeWeaponIndex = index;
+		GetActiveWeapon().OnSetActive();
+	}
+
+	WeaponBase GetActiveWeapon()
+	{
+		return inventory[activeWeaponIndex];
 	}
 
 	private void Start()
@@ -48,26 +67,59 @@ public class PlayerShoot : MonoBehaviour
 
 	void StartFire()
 	{
-		activeGun.StartAttack();
+		if (activeWeaponIndex < 0)
+			return;
+
+		GetActiveWeapon().StartAttack();
 	}
 
 	void StopFire()
 	{
-		activeGun.StopAttack();
+		if (activeWeaponIndex < 0)
+			return;
+
+		GetActiveWeapon().StopAttack();
 	}
 
 	void Reload()
 	{
-		activeGun.Reload();
+		if (activeWeaponIndex < 0)
+			return;
+
+		GetActiveWeapon().Reload();
 	}
 
 	public void AddAmmo(int amount)
 	{
-		activeGun.AddAmmo(amount);
+		if (activeWeaponIndex < 0)
+			return;
+
+		GetActiveWeapon().AddAmmo(amount);
 	}
 
 	public bool IsFull()
 	{
-		return activeGun.IsFull();
+		if (activeWeaponIndex < 0)
+			return true;
+
+		return GetActiveWeapon().IsFull();
+	}
+
+	public void AddWeapon(WeaponBase weapon)
+	{
+		int find = inventory.IndexOf(weapon);
+		if (find >= 0)
+		{
+			SetGunActive(find);
+			return;
+		}
+
+		inventory.Add(weapon);
+		weaponModels.Add(Instantiate(weapon.modelPrefab, gunPivot));
+
+		int index = inventory.Count - 1;
+		inventory[index].playerAim = playerAim;
+		inventory[index].ammoText = ammoText;
+		SetGunActive(index);
 	}
 }

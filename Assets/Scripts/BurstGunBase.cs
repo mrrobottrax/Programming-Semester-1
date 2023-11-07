@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BurstGunBase : ProjectileGun
 {
-    [Header("Burst Stats")]
-    [SerializeField] int shotsPerBurst;
-    [SerializeField] float timeBetweenShots;
+	[Header("Burst Stats")]
+	[SerializeField] int shotsPerBurst;
+	[SerializeField] float timeBetweenShots;
 
 	WaitForSeconds waitForNextShot;
 
@@ -24,6 +24,8 @@ public class BurstGunBase : ProjectileGun
 	IEnumerator BurstLoop(int bulletNumber, Vector3 dir)
 	{
 		base.Attack(dir);
+		if (bulletNumber > 0)
+			DecrementAmmo();
 
 		yield return waitForNextShot;
 

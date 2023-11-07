@@ -9,11 +9,7 @@ public class ShotgunBase : ProjectileGun
 
 	protected override void Attack(Vector3 direction)
 	{
-		DecrementAmmo();
-
 		for (int i = 0; i < bulletsPerShot; i++)
 			FireBullet(GetSpreadDir(direction));
-
-		UpdateAmmoDisplay();
 	}
 }
