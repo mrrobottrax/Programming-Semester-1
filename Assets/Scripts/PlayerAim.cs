@@ -10,6 +10,8 @@ public class PlayerAim : MonoBehaviour
 	[SerializeField] float minPitch = -89;
 	[SerializeField] float maxPitch = 89;
 
+	public Transform projectileSpawn;
+
 	public float Yaw { get; private set; }
 	public float Pitch { get; private set; }
 
