@@ -709,7 +709,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoText: {fileID: 2535287033223696648}
-  inventory: []
+  inventory:
+  - {fileID: 0}
   weaponModels: []
   gunPivot: {fileID: 93700673}
 --- !u!114 &8736914218731523896

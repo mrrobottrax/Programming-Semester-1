@@ -156,6 +156,6 @@ public abstract class WeaponBase : MonoBehaviour
 
 	protected virtual bool CanAttack()
 	{
-		return usesAmmo && clip > 0;
+		return usesAmmo && clip > 0 || !usesAmmo;
 	}
 }

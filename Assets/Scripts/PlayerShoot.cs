@@ -37,7 +37,8 @@ public class PlayerShoot : MonoBehaviour
 
 		if (activeWeaponIndex >= 0)
 			weaponModels[activeWeaponIndex].SetActive(false);
-		weaponModels[index].SetActive(true);
+		if (weaponModels[index])
+			weaponModels[index].SetActive(true);
 
 		activeWeaponIndex = index;
 		GetActiveWeapon().OnSetActive();
