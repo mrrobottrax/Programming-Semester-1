@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 4786817295416051876}
   - component: {fileID: 4786817295416051882}
   - component: {fileID: 1905187661073484854}
-  - component: {fileID: 414291554623632032}
+  - component: {fileID: 2272985220014629886}
   - component: {fileID: 8736914218731523896}
   m_Layer: 3
   m_Name: Player
@@ -696,7 +696,7 @@ MonoBehaviour:
   minPitch: -25
   maxPitch: 89
   projectileSpawn: {fileID: 4883323553134838692}
---- !u!114 &414291554623632032
+--- !u!114 &2272985220014629886
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -710,8 +710,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoText: {fileID: 2535287033223696648}
   inventory:
-  - {fileID: 0}
-  weaponModels: []
+  - weapon: {fileID: 0}
+    model: {fileID: 0}
   gunPivot: {fileID: 93700673}
 --- !u!114 &8736914218731523896
 MonoBehaviour:

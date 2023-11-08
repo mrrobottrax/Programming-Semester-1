@@ -1,14 +1,22 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using System;
+
+[Serializable]
+public struct InventoryEntry
+{
+	public WeaponBase weapon;
+	public GameObject model;
+}
 
 [RequireComponent(typeof(PlayerAim))]
 public class PlayerShoot : MonoBehaviour
 {
 	[Header("References")]
 	[SerializeField] TMP_Text ammoText;
-	[SerializeField] List<WeaponBase> inventory = new();
-	[SerializeField] List<GameObject> weaponModels = new();
+
+	[SerializeField] List<InventoryEntry> inventory = new();
 	[SerializeField] Transform gunPivot;
 
 	int activeWeaponIndex = -1;
@@ -20,8 +28,8 @@ public class PlayerShoot : MonoBehaviour
 
 		for (int i = 0; i < inventory.Count; i++)
 		{
-			inventory[i].playerAim = playerAim;
-			inventory[i].ammoText = ammoText;
+			inventory[i].weapon.playerAim = playerAim;
+			inventory[i].weapon.ammoText = ammoText;
 		}
 
 		SetGunActive(0);
@@ -35,10 +43,10 @@ public class PlayerShoot : MonoBehaviour
 			return;
 		}
 
-		if (activeWeaponIndex >= 0)
-			weaponModels[activeWeaponIndex].SetActive(false);
-		if (weaponModels[index])
-			weaponModels[index].SetActive(true);
+		if (activeWeaponIndex >= 0 && inventory[activeWeaponIndex].model)
+			inventory[activeWeaponIndex].model.SetActive(false);
+		if (inventory[index].model)
+			inventory[index].model.SetActive(true);
 
 		activeWeaponIndex = index;
 		GetActiveWeapon().OnSetActive();
@@ -46,7 +54,7 @@ public class PlayerShoot : MonoBehaviour
 
 	WeaponBase GetActiveWeapon()
 	{
-		return inventory[activeWeaponIndex];
+		return inventory[activeWeaponIndex].weapon;
 	}
 
 	private void Start()
@@ -108,19 +116,22 @@ public class PlayerShoot : MonoBehaviour
 
 	public void AddWeapon(WeaponBase weapon)
 	{
-		int find = inventory.IndexOf(weapon);
+		int find = inventory.FindIndex((InventoryEntry entry) => { return entry.weapon == weapon; });
 		if (find >= 0)
 		{
 			SetGunActive(find);
 			return;
 		}
 
-		inventory.Add(weapon);
-		weaponModels.Add(Instantiate(weapon.modelPrefab, gunPivot));
+		InventoryEntry entry = new InventoryEntry();
+		entry.weapon = weapon;
+		entry.model = Instantiate(weapon.modelPrefab, gunPivot);
+
+		inventory.Add(entry);
 
 		int index = inventory.Count - 1;
-		inventory[index].playerAim = playerAim;
-		inventory[index].ammoText = ammoText;
+		inventory[index].weapon.playerAim = playerAim;
+		inventory[index].weapon.ammoText = ammoText;
 		SetGunActive(index);
 	}
 }
