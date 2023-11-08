@@ -30,6 +30,13 @@ public class PlayerShoot : MonoBehaviour
 		{
 			inventory[i].weapon.playerAim = playerAim;
 			inventory[i].weapon.ammoText = ammoText;
+
+			if (inventory[i].model == null && inventory[i].weapon.modelPrefab != null)
+			{
+				InventoryEntry entry = inventory[i];
+				entry.model = Instantiate(inventory[i].weapon.modelPrefab, gunPivot);
+				inventory[i] = entry;
+			}
 		}
 
 		SetGunActive(0);
@@ -123,9 +130,11 @@ public class PlayerShoot : MonoBehaviour
 			return;
 		}
 
-		InventoryEntry entry = new InventoryEntry();
-		entry.weapon = weapon;
-		entry.model = Instantiate(weapon.modelPrefab, gunPivot);
+		InventoryEntry entry = new InventoryEntry
+		{
+			weapon = weapon,
+			model = Instantiate(weapon.modelPrefab, gunPivot)
+		};
 
 		inventory.Add(entry);
 

@@ -935,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3cfc1ed7aa2674d8dc440bc5dbe68e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 919132149155446097, guid: 6fa7c4d493ce0ce4f91a5f7fdf8f3ce3, type: 3}
   cooldown: 0.5
   isFullAuto: 1
   usesAmmo: 0
@@ -2260,6 +2260,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2272985220014629886, guid: 6d33b6e39c477244785303658e4fc4e1, type: 3}
+      propertyPath: inventory.Array.data[0].model
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2272985220014629886, guid: 6d33b6e39c477244785303658e4fc4e1, type: 3}
       propertyPath: inventory.Array.data[0].weapon
       value: 
