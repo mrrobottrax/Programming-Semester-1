@@ -23,9 +23,13 @@ public class BurstGunBase : ProjectileGun
 
 	IEnumerator BurstLoop(int bulletNumber, Vector3 dir)
 	{
+		if (!CanAttack())
+			yield break;
+
+		if (bulletNumber != 0)
+			OnFire(); // Play sounds etc
+
 		base.Attack(dir);
-		if (bulletNumber > 0)
-			DecrementAmmo();
 
 		yield return waitForNextShot;
 

@@ -98,6 +98,15 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory3"",
+                    ""type"": ""Button"",
+                    ""id"": ""d3f79125-232c-4a2f-888e-733ad8a28e4e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +241,17 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
                     ""action"": ""Inventory2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""386148cc-ad8c-48f3-8725-cae340c8c56b"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -248,6 +268,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
         m_DefaultMap_Inventory0 = m_DefaultMap.FindAction("Inventory0", throwIfNotFound: true);
         m_DefaultMap_Inventory1 = m_DefaultMap.FindAction("Inventory1", throwIfNotFound: true);
         m_DefaultMap_Inventory2 = m_DefaultMap.FindAction("Inventory2", throwIfNotFound: true);
+        m_DefaultMap_Inventory3 = m_DefaultMap.FindAction("Inventory3", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +338,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_DefaultMap_Inventory0;
     private readonly InputAction m_DefaultMap_Inventory1;
     private readonly InputAction m_DefaultMap_Inventory2;
+    private readonly InputAction m_DefaultMap_Inventory3;
     public struct DefaultMapActions
     {
         private @DefaultControls m_Wrapper;
@@ -329,6 +351,7 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
         public InputAction @Inventory0 => m_Wrapper.m_DefaultMap_Inventory0;
         public InputAction @Inventory1 => m_Wrapper.m_DefaultMap_Inventory1;
         public InputAction @Inventory2 => m_Wrapper.m_DefaultMap_Inventory2;
+        public InputAction @Inventory3 => m_Wrapper.m_DefaultMap_Inventory3;
         public InputActionMap Get() { return m_Wrapper.m_DefaultMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -362,6 +385,9 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
             @Inventory2.started += instance.OnInventory2;
             @Inventory2.performed += instance.OnInventory2;
             @Inventory2.canceled += instance.OnInventory2;
+            @Inventory3.started += instance.OnInventory3;
+            @Inventory3.performed += instance.OnInventory3;
+            @Inventory3.canceled += instance.OnInventory3;
         }
 
         private void UnregisterCallbacks(IDefaultMapActions instance)
@@ -390,6 +416,9 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
             @Inventory2.started -= instance.OnInventory2;
             @Inventory2.performed -= instance.OnInventory2;
             @Inventory2.canceled -= instance.OnInventory2;
+            @Inventory3.started -= instance.OnInventory3;
+            @Inventory3.performed -= instance.OnInventory3;
+            @Inventory3.canceled -= instance.OnInventory3;
         }
 
         public void RemoveCallbacks(IDefaultMapActions instance)
@@ -417,5 +446,6 @@ public partial class @DefaultControls: IInputActionCollection2, IDisposable
         void OnInventory0(InputAction.CallbackContext context);
         void OnInventory1(InputAction.CallbackContext context);
         void OnInventory2(InputAction.CallbackContext context);
+        void OnInventory3(InputAction.CallbackContext context);
     }
 }

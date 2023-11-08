@@ -5,8 +5,12 @@ using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour
 {
-	[Header("Viewmodel")]
+	[Header("References")]
 	public GameObject modelPrefab;
+	[SerializeField] AudioClip fireSound;
+
+	[Header("Sound Stats")]
+	[SerializeField] float pitchVariation = 0.1f;
 
 	[Header("Weapon Base Stats")]
 	[SerializeField] float cooldown;
@@ -24,6 +28,8 @@ public abstract class WeaponBase : MonoBehaviour
 	public PlayerAim playerAim;
 	[HideInInspector]
 	public TMP_Text ammoText;
+	[HideInInspector]
+	public AudioSource soundSource;
 
 	WaitForSeconds cooldownTimer;
 	WaitUntil waitForCooldown;
@@ -86,11 +92,21 @@ public abstract class WeaponBase : MonoBehaviour
 		if (!CanAttack())
 			return;
 
+		OnFire();
+		Attack(playerAim.Rotate3D(Vector3.forward));
+		StartCoroutine(AttackCooldown());
+	}
+
+	protected void OnFire()
+	{
 		if (usesAmmo)
 			DecrementAmmo();
 
-		Attack(playerAim.Rotate3D(Vector3.forward));
-		StartCoroutine(AttackCooldown());
+		if (soundSource != null)
+		{
+			soundSource.PlayOneShot(fireSound);
+			soundSource.pitch = Random.Range(1 - pitchVariation, 1 + pitchVariation);
+		}
 	}
 
 	protected abstract void Attack(Vector3 direction);

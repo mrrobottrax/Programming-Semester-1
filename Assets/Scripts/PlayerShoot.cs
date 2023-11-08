@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 using System;
+using System.Reflection;
 
 [Serializable]
 public struct InventoryEntry
@@ -15,6 +16,7 @@ public class PlayerShoot : MonoBehaviour
 {
 	[Header("References")]
 	[SerializeField] TMP_Text ammoText;
+	[SerializeField] AudioSource gunSource;
 
 	[SerializeField] List<InventoryEntry> inventory = new();
 	[SerializeField] Transform gunPivot;
@@ -28,8 +30,7 @@ public class PlayerShoot : MonoBehaviour
 
 		for (int i = 0; i < inventory.Count; i++)
 		{
-			inventory[i].weapon.playerAim = playerAim;
-			inventory[i].weapon.ammoText = ammoText;
+			SetupWeaponReferences(i);
 
 			if (inventory[i].model == null && inventory[i].weapon.modelPrefab != null)
 			{
@@ -40,6 +41,24 @@ public class PlayerShoot : MonoBehaviour
 		}
 
 		SetGunActive(0);
+	}
+
+	private void Start()
+	{
+		InputManager.Controls.DefaultMap.Fire1.performed += ctx =>
+		{
+			bool isPressed = ctx.ReadValue<float>() > 0;
+			if (isPressed)
+				StartFire();
+			else
+				StopFire();
+		};
+		InputManager.Controls.DefaultMap.Reload.performed += ctx => Reload();
+
+		InputManager.Controls.DefaultMap.Inventory0.performed += ctx => SetGunActive(0);
+		InputManager.Controls.DefaultMap.Inventory1.performed += ctx => SetGunActive(1);
+		InputManager.Controls.DefaultMap.Inventory2.performed += ctx => SetGunActive(2);
+		InputManager.Controls.DefaultMap.Inventory3.performed += ctx => SetGunActive(3);
 	}
 
 	void SetGunActive(int index)
@@ -62,23 +81,6 @@ public class PlayerShoot : MonoBehaviour
 	WeaponBase GetActiveWeapon()
 	{
 		return inventory[activeWeaponIndex].weapon;
-	}
-
-	private void Start()
-	{
-		InputManager.Controls.DefaultMap.Fire1.performed += ctx =>
-		{
-			bool isPressed = ctx.ReadValue<float>() > 0;
-			if (isPressed)
-				StartFire();
-			else
-				StopFire();
-		};
-		InputManager.Controls.DefaultMap.Reload.performed += ctx => Reload();
-
-		InputManager.Controls.DefaultMap.Inventory0.performed += ctx => SetGunActive(0);
-		InputManager.Controls.DefaultMap.Inventory1.performed += ctx => SetGunActive(1);
-		InputManager.Controls.DefaultMap.Inventory2.performed += ctx => SetGunActive(2);
 	}
 
 	void StartFire()
@@ -139,8 +141,14 @@ public class PlayerShoot : MonoBehaviour
 		inventory.Add(entry);
 
 		int index = inventory.Count - 1;
+		SetupWeaponReferences(index);
+		SetGunActive(index);
+	}
+
+	void SetupWeaponReferences(int index)
+	{
 		inventory[index].weapon.playerAim = playerAim;
 		inventory[index].weapon.ammoText = ammoText;
-		SetGunActive(index);
+		inventory[index].weapon.soundSource = gunSource;
 	}
 }
