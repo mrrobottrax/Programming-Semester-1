@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
 	Rigidbody rb;
-	PlayerAim playerAim;
 	CapsuleCollider capsule;
 
 	const float jumpForce = 4;
@@ -14,16 +13,12 @@ public class PlayerMove : MonoBehaviour
 	[SerializeField] LayerMask groundLayers = ~0;
 	bool isGrounded = false;
 
+	public Vector2 moveVector = Vector2.zero;
+
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody>();
-		playerAim = GetComponent<PlayerAim>();
 		capsule = GetComponent<CapsuleCollider>();
-	}
-
-	private void Start()
-	{
-		InputManager.Controls.DefaultMap.Jump.performed += ctx => Jump();
 	}
 
 	void FixedUpdate()
@@ -48,8 +43,7 @@ public class PlayerMove : MonoBehaviour
 
 	void Move()
 	{
-		Vector2 moveDir = playerAim.Rotate2D(InputManager.Controls.DefaultMap.Move.ReadValue<Vector2>());
-		rb.AddForce(acceleration * Time.fixedDeltaTime * new Vector3(moveDir.x, 0, moveDir.y), ForceMode.VelocityChange);
+		rb.AddForce(acceleration * Time.fixedDeltaTime * new Vector3(moveVector.x, 0, moveVector.y), ForceMode.VelocityChange);
 
 		float speed = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
 		if (speed == 0)
@@ -63,7 +57,7 @@ public class PlayerMove : MonoBehaviour
 		}
 	}
 
-	void Jump()
+	public void Jump()
 	{
 		if (isGrounded)
 		{

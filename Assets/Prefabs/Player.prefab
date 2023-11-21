@@ -666,6 +666,7 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 1
+  moveVector: {x: 0, y: 0}
 --- !u!114 &4786817295416051882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -727,6 +728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607a21e8cba704a4890480fa24bb8a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMove: {fileID: 4786817295416051876}
+  playerAim: {fileID: 1905187661073484854}
 --- !u!82 &2353141744264142150
 AudioSource:
   m_ObjectHideFlags: 0
