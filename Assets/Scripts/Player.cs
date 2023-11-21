@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	[SerializeField] PlayerMove playerMove;
+	[SerializeField] CharacterMove playerMove;
 	[SerializeField] PlayerAim playerAim;
 
 	private void Awake()

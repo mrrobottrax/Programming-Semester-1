@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(PlayerAim), typeof(CapsuleCollider))]
-public class PlayerMove : MonoBehaviour
+public class CharacterMove : MonoBehaviour
 {
 	Rigidbody rb;
 	CapsuleCollider capsule;
