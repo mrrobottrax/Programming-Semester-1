@@ -1,13 +1,13 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(PlayerAim), typeof(CapsuleCollider))]
+[RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
 public class CharacterMove : MonoBehaviour
 {
 	Rigidbody rb;
 	CapsuleCollider capsule;
 
+	[SerializeField] float moveSpeed = 5;
 	const float jumpForce = 4;
-	const float moveSpeed = 5;
 	const float acceleration = 50;
 
 	[SerializeField] LayerMask groundLayers = ~0;
