@@ -13,6 +13,8 @@ public abstract class WeaponBase : MonoBehaviour
 	[SerializeField] float pitchVariation = 0.1f;
 
 	[Header("Weapon Base Stats")]
+	[SerializeField] protected float baseDamage;
+	[SerializeField] protected float knockback;
 	[SerializeField] float cooldown;
 	[SerializeField] bool isFullAuto;
 
@@ -173,5 +175,15 @@ public abstract class WeaponBase : MonoBehaviour
 	protected virtual bool CanAttack()
 	{
 		return usesAmmo && clip > 0 || !usesAmmo;
+	}
+
+	public float GetBaseDamage()
+	{
+		return baseDamage;
+	}
+
+	public float GetKnockback()
+	{
+		return knockback;
 	}
 }

@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterMove))]
+[RequireComponent(typeof(CharacterMove), typeof(Health))]
 public class Enemy : MonoBehaviour
 {
 	[SerializeField] Transform player;
 	[SerializeField] LayerMask visibilityMask;
 	CharacterMove characterMove;
+	Health health;
 
 	[Flags]
 	enum AiFlags
@@ -26,7 +27,6 @@ public class Enemy : MonoBehaviour
 	AiState state;
 
 	bool canSeePlayer = false;
-	float health = 100;
 
 	Vector2 wanderDir = Vector2.zero;
 	float wanderTimer = 0;
@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
 	private void Awake()
 	{
 		characterMove = GetComponent<CharacterMove>();
+		health = GetComponent<Health>();
 	}
 
 	private void FixedUpdate()
@@ -105,7 +106,7 @@ public class Enemy : MonoBehaviour
 				return;
 			}
 
-			if (health < 50)
+			if (health.GetHealth() < 50)
 			{
 				state = AiState.Retreating;
 				return;

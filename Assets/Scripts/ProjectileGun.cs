@@ -11,8 +11,11 @@ public class ProjectileGun : Gun
 	public override void FireBullet(Vector3 direction)
 	{
 		GameObject bullet = Instantiate(projectilePrefab);
-		bullet.transform.position = playerAim.projectileSpawn.position;
-		bullet.transform.rotation = Quaternion.LookRotation(direction);
+		bullet.transform.SetPositionAndRotation(playerAim.projectileSpawn.position, Quaternion.LookRotation(direction));
 		bullet.GetComponent<Rigidbody>().velocity = direction * velocity;
+
+		Bullet bulletScript = bullet.GetComponent<Bullet>();
+		bulletScript.weapon = this;
+		bulletScript.direction = direction;
 	}
 }

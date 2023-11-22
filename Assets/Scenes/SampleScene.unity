@@ -801,6 +801,8 @@ MonoBehaviour:
   modelPrefab: {fileID: 919132149155446097, guid: 3d5e36dac7368774bbd5d791706f28db, type: 3}
   fireSound: {fileID: 8300000, guid: fb528a48b83ff1f41b809cf4b10f7af7, type: 3}
   pitchVariation: 0.1
+  baseDamage: 10
+  knockback: 2
   cooldown: 0.2
   isFullAuto: 1
   usesAmmo: 1
@@ -941,6 +943,8 @@ MonoBehaviour:
   modelPrefab: {fileID: 919132149155446097, guid: 6fa7c4d493ce0ce4f91a5f7fdf8f3ce3, type: 3}
   fireSound: {fileID: 8300000, guid: ca5aa4357ee1ff14b9a16801de8133e5, type: 3}
   pitchVariation: 0.1
+  baseDamage: 50
+  knockback: 40
   cooldown: 0.5
   isFullAuto: 1
   usesAmmo: 0
@@ -950,6 +954,9 @@ MonoBehaviour:
   ammoText: {fileID: 0}
   soundSource: {fileID: 0}
   range: 2
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!4 &553718795 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1896461682962505469, guid: 12c93c943fa22464b89a89952cdca838, type: 3}
@@ -1647,6 +1654,8 @@ MonoBehaviour:
   modelPrefab: {fileID: 919132149155446097, guid: b961162f3e1d41c42bb7e5af43179b95, type: 3}
   fireSound: {fileID: 8300000, guid: f9c9dc91697a2f748aeea55d66629e6b, type: 3}
   pitchVariation: 0.1
+  baseDamage: 5
+  knockback: 1
   cooldown: 1
   isFullAuto: 0
   usesAmmo: 1
@@ -1707,6 +1716,8 @@ MonoBehaviour:
   modelPrefab: {fileID: 919132149155446097, guid: cb21f9155903003459524de3b6c99d0b, type: 3}
   fireSound: {fileID: 8300000, guid: d8f6cd762cb657b4395a7aa0c37fb330, type: 3}
   pitchVariation: 0.1
+  baseDamage: 10
+  knockback: 4
   cooldown: 1
   isFullAuto: 0
   usesAmmo: 1
@@ -2519,7 +2530,7 @@ GameObject:
   - component: {fileID: 6441668617339707587}
   - component: {fileID: 4762491301484727869}
   - component: {fileID: 117334607375460931}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2743,7 +2754,8 @@ GameObject:
   - component: {fileID: 8538695361892695575}
   - component: {fileID: 8538695361892695576}
   - component: {fileID: 8538695361892695582}
-  m_Layer: 3
+  - component: {fileID: 8538695361892695583}
+  m_Layer: 0
   m_Name: Enemy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2767,3 +2779,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   flags: 0
+--- !u!114 &8538695361892695583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8538695361892695581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e3aa1e505acd841b4e5df58eb06782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
