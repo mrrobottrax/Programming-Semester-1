@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
 	[SerializeField] Transform player;
 	[SerializeField] LayerMask visibilityMask;
+	[SerializeField] MeshRenderer meshRenderer;
+	[SerializeField] float runThreshold = 25;
 	CharacterMove characterMove;
 	Health health;
 
@@ -22,7 +24,8 @@ public class Enemy : MonoBehaviour
 	{
 		Wandering,
 		Attacking,
-		Retreating
+		Retreating,
+		Dead
 	}
 	AiState state;
 
@@ -43,6 +46,7 @@ public class Enemy : MonoBehaviour
 		GetData();
 		GetState();
 		PickMoveDir();
+		SetColor();
 	}
 
 	void PickMoveDir()
@@ -79,6 +83,30 @@ public class Enemy : MonoBehaviour
 					characterMove.moveVector = -dir.normalized;
 				}
 				break;
+			case AiState.Dead:
+				characterMove.moveVector = Vector2.zero;
+				break;
+			default:
+				break;
+		}
+	}
+
+	void SetColor()
+	{
+		switch (state)
+		{
+			case AiState.Wandering:
+				meshRenderer.material.color = Color.green;
+				break;
+			case AiState.Attacking:
+				meshRenderer.material.color = Color.red;
+				break;
+			case AiState.Retreating:
+				meshRenderer.material.color = Color.blue;
+				break;
+			case AiState.Dead:
+				meshRenderer.material.color = Color.grey;
+				break;
 			default:
 				break;
 		}
@@ -93,6 +121,12 @@ public class Enemy : MonoBehaviour
 
 	void GetState()
 	{
+		if (health.GetHealth() <= 0)
+		{
+			state = AiState.Dead;
+			return;
+		}
+
 		if (canSeePlayer)
 		{
 			if (flags.HasFlag(AiFlags.Coward))
@@ -106,7 +140,7 @@ public class Enemy : MonoBehaviour
 				return;
 			}
 
-			if (health.GetHealth() < 50)
+			if (health.GetHealth() < runThreshold)
 			{
 				state = AiState.Retreating;
 				return;

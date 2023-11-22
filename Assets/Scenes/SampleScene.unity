@@ -2778,6 +2778,7 @@ MonoBehaviour:
   visibilityMask:
     serializedVersion: 2
     m_Bits: 1
+  meshRenderer: {fileID: 117334607375460931}
   flags: 0
 --- !u!114 &8538695361892695583
 MonoBehaviour:
